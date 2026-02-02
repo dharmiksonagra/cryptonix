@@ -1,0 +1,90 @@
+  <!doctype html>
+  <html lang="en">
+  <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Cryptonix — Multi Encryption Suite</title>
+
+  <!-- External libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <link rel="stylesheet" href="style_alt.css">
+  </head>
+  <body>
+    <div class="header">
+      <img src="cryptonix-logo.png" class="logo" alt="Cryptonix Official Logo">
+  <h1>CRYPTONIX</h1>
+      <h4 id="cyberText" class="cyber-subtitle"></h4>
+    </div>
+
+    <main class="card">
+      <section class="desc"></section>
+  <section class="controls"></section><section class="controls">
+        <label for="algo">Algorithm</label>
+        <select id="algo" onchange="onAlgoChange()">
+          <option value="aes">AES-GCM (password)</option>
+          <option value="des">DES (CryptoJS) — legacy</option>
+          <option value="3des">TripleDES (CryptoJS) — legacy</option>
+          <option value="rsa">RSA-OAEP (2048)</option>
+        </select>
+
+        <div id="symSection">
+          <label for="symKey">Key / Passphrase</label>
+          <input id="symKey" placeholder="Enter passphrase or key" type="text" />
+          <div class="row">
+            <div style="flex:1">
+              <label for="ivInput">
+IV (optional for AES — auto-generated if blank)
+</label>
+
+              <input id="ivInput" placeholder="Leave blank to auto-generate" type="text" />
+            </div>
+            <div style="width:140px">
+              <label>&nbsp;</label>
+              <button id="genSymKey" onclick="generateSymmetricKey()">Generate Key</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="rsaSection" style="display:none">
+          <div class="row">
+            <button onclick="generateRSA()">Generate RSA Keypair</button>
+            <button onclick="exportPublic()">Export Public PEM</button>
+          </div>
+          <label>Public Key (PEM)</label>
+          <textarea id="pubPem" rows="4" placeholder="Public key PEM"></textarea>
+          <label>Private Key (PEM)</label>
+          <textarea id="privPem" rows="4" placeholder="Private key PEM"></textarea>
+        </div>
+
+        <label>Input Text</label>
+        <textarea id="input" rows="4" placeholder="Type plaintext or paste ciphertext here"></textarea>
+
+        <div class="row">
+          <button id="encryptBtn" onclick="handleEncrypt()">Encrypt</button>
+          <button id="decryptBtn" onclick="handleDecrypt()">Decrypt</button>
+          <button onclick="copyOutput()">Copy Output</button>
+          <button onclick="clearAll()">Clear</button>
+        </div>
+
+        <label>Output</label>
+        <textarea id="output" rows="4" placeholder="Result output"></textarea>
+
+        <h3>File / Hybrid Encryption</h3>
+        <input type="file" id="fileInput" />
+        <div class="row">
+          <button onclick="encryptFileHybrid()">Encrypt File (hybrid)</button>
+          <button onclick="decryptFileHybrid()">Decrypt File (hybrid)</button>
+        </div>
+
+        <p id="notify" class="notify"></p>
+      </section>
+
+      <section class="desc">
+        <h2 id="descTitle">About AES</h2>
+        <div id="descBox" class="descBox"></div>
+      </section>
+    </main>
+
+  <script src="script.js"></script>
+  </body>
+  </html>
